@@ -18,7 +18,7 @@ Design moderno, build manual (sem Gradle), open source.
 
 ## 📲 Instalação rápida
 
-Baixe o APK na [Release](https://suphiezet.github.io/CalculadoraAndroid/) e instale no seu Android.
+Baixe o APK na [Release](https://github.com/suphiezet/CalculadoraAndroid/releases/download/v1/CalculadoraBonita.apk) e instale no seu Android.
 
 ---
 
