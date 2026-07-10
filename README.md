@@ -1,64 +1,93 @@
 # 🧮 Calculadora Bonita
 
-**Calculadora Android feita em Java puro, sem Gradle, por pura diversão.**
+**Calculadora Android nativa, feita em Java puro – por diversão e aprendizado.**
 
-Um aplicativo leve, com visual moderno (gradiente azul → vermelho), operações matemáticas básicas e interface adaptável a qualquer tela.
-
----
-
-## ✨ Destaques
-
-- 🎨 **Design bonito** – gradiente de fundo, botões coloridos, display elegante.
-- 📱 **Adaptável** – funciona em qualquer tamanho de tela (pesos proporcionais).
-- 🧩 **Zero dependências** – apenas Java + Android SDK.
-- 🔧 **Build manual** – sem Gradle, usando `aapt2`, `d8`, `zipalign` e `apksigner`.
-- 📦 **Open source (MIT)** – estude, modifique e compartilhe à vontade.
+Design moderno, build manual (sem Gradle), open source.
 
 ---
 
-## 🚀 Para instalar
+## ⚡ Funcionalidades
 
-1. Baixe o APK mais recente na [seção de Releases](https://github.com/seu-usuario/CalculadoraBonita/releases).
-2. Transfira para seu celular Android e instale.
-3. Abra e comece a calcular!
-
----
-
-## 🛠️ Para compilar (Windows)
-
-1. Tenha o **JDK 11+** e o **Android SDK** instalados.
-2. Clone o repositório:
-   ```bash
-   git clone https://github.com/seu-usuario/CalculadoraBonita.git
-   cd CalculadoraBonita
-   ```
-3. Execute o script de build:
-   ```bash
-   build.bat
-   ```
-4. O APK será gerado em `bin/CalculadoraBonita.apk`.
+- Operações básicas: +, −, ×, ÷  
+- Display limpo, botão de backspace, inversão de sinal (±)  
+- Interface adaptável a qualquer tamanho de tela  
+- Gradiente azul → vermelho no fundo  
+- Ícone adaptativo incluso  
 
 ---
 
-## 📂 Estrutura do projeto
+## 📲 Instalação rápida
+
+Baixe o APK na [Release](https://suphiezet.github.io/CalculadoraAndroid/) e instale no seu Android.
+
+---
+
+## 🔧 Compilar você mesmo
+
+Requisitos: **JDK 11+** e **Android SDK** (com build-tools 34.0.0).
+
+```bash
+git clone https://github.com/suphiezet/CalculadoraBonita.git
+cd CalculadoraBonita
+build.bat
+```
+
+O APK aparecerá em `bin/CalculadoraBonita.apk`.
+
+---
+
+## 📁 Estrutura
 
 ```
 CalculadoraBonita/
-├── src/com/exemplo/calculadora/
-│   ├── MainActivity.java
-│   └── CalculadoraView.java
-├── res/                     (ícones adaptativos)
+├── src/.../MainActivity.java
+├── src/.../CalculadoraView.java
+├── res/                 (ícones)
 ├── AndroidManifest.xml
-├── build.bat                (script de compilação)
-└── README.md
+├── build.bat
+└── documentario.html    ← documentação completa
 ```
+
+---
+
+## 📖 Quer saber mais?
+
+A história por trás do projeto, motivações, detalhes técnicos e muito mais estão na **documentação oficial**:
+
+👉 **[Acesse o documentário completo](https://suphiezet.github.io/CalculadoraAndroid/)** (aberto no navegador)
 
 ---
 
 ## 📜 Licença
 
-Este projeto está sob a **Licença MIT**. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+MIT – veja o arquivo [LICENSE](LICENSE).  
+Use, modifique, compartilhe. Feito com ❤️ e Java.
+```
 
 ---
 
-**Feito com ❤️ e Java. Divirta-se!**
+**LICENSE** (MIT)
+
+```
+MIT License
+
+Copyright (c) 2025 [Seu Nome]
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
