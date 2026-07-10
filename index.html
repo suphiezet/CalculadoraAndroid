@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Bonita • Documentário</title>
+    <style>
+        /* ===== RESET & BASE ===== */
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior:smooth; }
+        body {
+            font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif;
+            background: radial-gradient(ellipse at 20% 50%, #0a0f1e 0%, #03050a 100%);
+            color: #e0e6f0;
+            line-height: 1.7;
+            overflow-x: hidden;
+            position: relative;
+        }
+        /* partículas de fundo (estilo estrelas) */
+        body::before {
+            content: "";
+            position: fixed;
+            top:0; left:0;
+            width:100%; height:100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" opacity="0.08"><circle cx="20" cy="30" r="1.5" fill="white"/><circle cx="170" cy="50" r="1" fill="white"/><circle cx="80" cy="120" r="0.8" fill="white"/><circle cx="150" cy="150" r="1.3" fill="white"/><circle cx="40" cy="180" r="0.7" fill="white"/><circle cx="120" cy="90" r="1.2" fill="white"/><circle cx="90" cy="160" r="0.9" fill="white"/><circle cx="10" cy="80" r="0.6" fill="white"/></svg>');
+            background-size: 200px 200px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== TIPOGRAFIA ===== */
+        h1, h2, h3 {
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+        h1 { font-size: 3.8rem; }
+        h2 { font-size: 2.5rem; margin-bottom: 1.5rem; }
+        h3 { font-size: 1.8rem; margin-bottom: 1rem; }
+        p { font-size: 1.1rem; margin-bottom: 1.5rem; opacity: 0.9; }
+
+        .highlight {
+            background: linear-gradient(135deg, #ff8c00, #ff2d55);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            text-align: center;
+            padding: 6rem 1rem 4rem;
+            position: relative;
+        }
+        .hero h1 {
+            margin-bottom: 1rem;
+            animation: fadeUp 1s ease-out;
+        }
+        .hero .subtitle {
+            font-size: 1.3rem;
+            color: #8892b0;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            animation: fadeUp 1s ease-out 0.2s both;
+        }
+        @keyframes fadeUp {
+            from { opacity:0; transform:translateY(30px); }
+            to { opacity:1; transform:translateY(0); }
+        }
+
+        /* ===== GLASS CARD ===== */
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+        }
+        .card h2 {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .card h2 span.emoji {
+            font-size: 2rem;
+        }
+
+        /* ===== BOTÕES ===== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 14px 32px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #ff2d55, #ff8c00);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 45, 85, 0.3);
+        }
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 25px rgba(255, 45, 85, 0.5);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: #e0e6f0;
+        }
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: white;
+        }
+
+        /* ===== TIMELINE ===== */
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+            border-left: 2px solid rgba(255, 255, 255, 0.15);
+            margin: 2rem 0;
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            left: -38px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            background: #ff2d55;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #ff2d55;
+        }
+
+        /* ===== CODE BLOCK ===== */
+        pre {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 12px;
+            padding: 1.5rem;
+            overflow-x: auto;
+            font-size: 0.9rem;
+            margin: 1rem 0;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            color: #ccc;
+        }
+
+        /* ===== ANIMAÇÕES DE SCROLL ===== */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            text-align: center;
+            padding: 3rem;
+            color: #5a6680;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 2rem;
+        }
+
+        /* ===== RESPONSIVO ===== */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            .card { padding: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <main class="container">
+        <!-- HERO -->
+        <section class="hero">
+            <h1><span class="highlight">Calculadora Bonita</span></h1>
+            <p class="subtitle">
+                Um aplicativo Android elegante, criado do zero, por pura diversão — e totalmente open source.
+            </p>
+            <a href="#sobre" class="btn btn-primary" style="font-size: 1.1rem;">
+                📖 Conheça a história
+            </a>
+        </section>
+
+        <!-- SOBRE A CALCULADORA -->
+        <section class="card fade-in" id="sobre">
+            <h2><span class="emoji">🧮</span> Sobre a Calculadora</h2>
+            <p>
+                A <strong>Calculadora Bonita</strong> é um aplicativo Android nativo, desenvolvido em Java puro, sem dependências externas e sem arquivos XML de layout (exceto o manifesto). Ela oferece uma experiência visual moderna, com gradiente azul e vermelho, botões arredondados, e uma lógica completa de avaliação de expressões matemáticas.
+            </p>
+            <p>
+                🔹 Operações básicas: adição, subtração, multiplicação, divisão.<br>
+                🔹 Funcionalidades extras: inversão de sinal (±), backspace, porcentagem, limpar tudo.<br>
+                🔹 Interface adaptativa: usa pesos para se ajustar a qualquer tamanho de tela.<br>
+                🔹 Ícone adaptativo: criado com vetores XML, seguindo as diretrizes do Material Design.
+            </p>
+            <p>
+                O código foi compilado manualmente com as ferramentas de build do Android SDK (aapt2, d8, zipalign, apksigner), sem uso do Gradle, garantindo total controle sobre o processo.
+            </p>
+        </section>
+
+        <!-- POR QUE EU CRIEI -->
+        <section class="card fade-in" id="porque">
+            <h2><span class="emoji">💡</span> Por que eu criei?</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3>😄 Por diversão</h3>
+                    <p>Às vezes, a melhor motivação é simplesmente se divertir programando. Criar algo bonito e funcional do zero é extremamente gratificante.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>🧪 Aprendizado técnico</h3>
+                    <p>Queria entender profundamente como um APK é montado sem Gradle, usando apenas as ferramentas de linha de comando do SDK. Foi uma aula sobre DEX, recursos, alinhamento e assinatura.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>🎨 Paixão por UI/UX</h3>
+                    <p>Adoro criar interfaces bonitas diretamente em código. A calculadora me permitiu brincar com cores, fontes, pesos e animações de forma programática.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>🤝 Compartilhar conhecimento</h3>
+                    <p>Disponibilizar o código-fonte abertamente ajuda outros desenvolvedores a aprenderem também. Open source é sobre comunidade.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- COMO CRIEI -->
+        <section class="card fade-in" id="como">
+            <h2><span class="emoji">⚙️</span> Como eu criei</h2>
+            <p>
+                O processo foi totalmente artesanal. Comecei com um arquivo Java simples e um `AndroidManifest.xml`, e fui construindo o APK passo a passo:
+            </p>
+            <pre><code>1. Compilação Java → javac -cp android.jar -d obj src/com/exemplo/calculadora/*.java
+2. Conversão para DEX → d8 --lib android.jar --output bin/ obj/...
+3. Compilação de recursos (ícones) → aapt2 compile --dir res -o obj/compiled_res
+4. Geração do APK base → aapt2 link -o bin/app.unaligned.apk -I android.jar --manifest AndroidManifest.xml -R obj/compiled_res
+5. Inserção do DEX → jar uf bin/app.unaligned.apk classes.dex
+6. Alinhamento → zipalign -p -f 4 bin/app.unaligned.apk bin/app.aligned.apk
+7. Assinatura → apksigner sign --ks debug.keystore ... --out bin/CalculadoraBonita.apk bin/app.aligned.apk</code></pre>
+            <p>
+                Todo esse fluxo foi automatizado com um script <code>build.bat</code> para Windows. O resultado é um APK funcional que roda em dispositivos Android 5.0+.
+            </p>
+        </section>
+
+        <!-- OPEN SOURCE E GITHUB -->
+        <section class="card fade-in" id="github">
+            <h2><span class="emoji">🐙</span> Código-fonte no GitHub</h2>
+            <p>
+                O projeto é completamente <strong>open source</strong> e está disponível no GitHub para quem quiser estudar, modificar ou contribuir. Sinta-se à vontade para clonar, fazer um fork ou abrir uma issue.
+            </p>
+            <a href="https://github.com/seu-usuario/CalculadoraBonita" target="_blank" class="btn btn-primary" style="margin-top: 1rem;">
+                🔗 Ver no GitHub
+            </a>
+            <p style="margin-top: 1.5rem; font-size: 0.95rem; color: #8892b0;">
+                Inclui todos os arquivos: MainActivity.java, CalculadoraView.java, AndroidManifest.xml, build.bat, recursos de ícone, e este documentário.
+            </p>
+        </section>
+
+        <!-- LICENÇA -->
+        <section class="card fade-in" id="licenca">
+            <h2><span class="emoji">📜</span> Licença</h2>
+            <p>
+                Este projeto é distribuído sob a <strong>Licença MIT</strong>, uma das licenças mais permissivas do mundo open source. Isso significa que você pode:
+            </p>
+            <ul style="list-style: none; padding: 0;">
+                <li>✅ Usar o código para qualquer finalidade</li>
+                <li>✅ Modificar e redistribuir</li>
+                <li>✅ Incluir em projetos pessoais ou comerciais</li>
+                <li>✅ Não há garantias, mas é feito com carinho 😊</li>
+            </ul>
+            <p style="margin-top: 1rem;">
+                Leia o texto completo da licença no arquivo <code>LICENSE</code> do repositório.
+            </p>
+        </section>
+
+        <!-- DIVERSÃO -->
+        <section class="card fade-in" id="diversao" style="text-align: center;">
+            <h2><span class="emoji">🎉</span> Feito por diversão!</h2>
+            <p>
+                Este projeto não tem fins lucrativos, não coleta dados, não exibe anúncios. É apenas um hobby transformado em software útil e belo. Se você gostou, deixe uma ⭐ no GitHub e compartilhe com amigos!
+            </p>
+            <a href="https://github.com/seu-usuario/CalculadoraBonita" target="_blank" class="btn btn-outline">
+                ⭐ Deixar estrela
+            </a>
+        </section>
+
+        <footer>
+            <p>✨ Calculadora Bonita • Criada com Java puro, build manual e muito amor pelo código aberto ✨</p>
+        </footer>
+    </main>
+
+    <!-- SCRIPT DE ANIMAÇÕES -->
+    <script>
+        // Intersection Observer para animar cards ao rolar
+        const fadeElements = document.querySelectorAll('.fade-in');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.15 });
+
+        fadeElements.forEach(el => observer.observe(el));
+
+        // Efeito sutil de parallax no fundo (opcional)
+        window.addEventListener('mousemove', (e) => {
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            document.body.style.backgroundPosition = `${x*2}% ${y*2}%`;
+        });
+    </script>
+</body>
+</html>
